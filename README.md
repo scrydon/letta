@@ -16,6 +16,9 @@ git rebase upstream/main
 
 # Push the changes to your fork
 git push origin main
+
+# Apply changes (DB)
+LETTA_PG_URI=postgresql://postgres:postgres@localhost:5432/scrydoncom alembic upgrade head
 ```
 
 ## Running the app

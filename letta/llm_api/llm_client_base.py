@@ -44,7 +44,9 @@ class LLMClientBase:
         If stream=True, returns a Stream[ChatCompletionChunk] that can be iterated over.
         Otherwise returns a ChatCompletionResponse.
         """
-        request_data = self.build_request_data(messages, llm_config, tools, force_tool_call)
+        request_data = self.build_request_data(
+            messages, llm_config, tools, force_tool_call
+        )
 
         try:
             log_event(name="llm_request_sent", attributes=request_data)
@@ -56,7 +58,9 @@ class LLMClientBase:
         except Exception as e:
             raise self.handle_llm_error(e)
 
-        return self.convert_response_to_chat_completion(response_data, messages, llm_config)
+        return self.convert_response_to_chat_completion(
+            response_data, messages, llm_config
+        )
 
     async def send_llm_request_async(
         self,
@@ -71,7 +75,9 @@ class LLMClientBase:
         If stream=True, returns an AsyncStream[ChatCompletionChunk] that can be async iterated over.
         Otherwise returns a ChatCompletionResponse.
         """
-        request_data = self.build_request_data(messages, llm_config, tools, force_tool_call)
+        request_data = self.build_request_data(
+            messages, llm_config, tools, force_tool_call
+        )
 
         try:
             log_event(name="llm_request_sent", attributes=request_data)
@@ -83,7 +89,9 @@ class LLMClientBase:
         except Exception as e:
             raise self.handle_llm_error(e)
 
-        return self.convert_response_to_chat_completion(response_data, messages, llm_config)
+        return self.convert_response_to_chat_completion(
+            response_data, messages, llm_config
+        )
 
     async def send_llm_batch_request_async(
         self,
@@ -134,18 +142,26 @@ class LLMClientBase:
         raise NotImplementedError
 
     @abstractmethod
-    def stream(self, request_data: dict, llm_config: LLMConfig) -> Stream[ChatCompletionChunk]:
+    def stream(
+        self, request_data: dict, llm_config: LLMConfig
+    ) -> Stream[ChatCompletionChunk]:
         """
         Performs underlying streaming request to llm and returns raw response.
         """
-        raise NotImplementedError(f"Streaming is not supported for {llm_config.model_endpoint_type}")
+        raise NotImplementedError(
+            f"Streaming is not supported for {llm_config.model_endpoint_type}"
+        )
 
     @abstractmethod
-    async def stream_async(self, request_data: dict, llm_config: LLMConfig) -> AsyncStream[ChatCompletionChunk]:
+    async def stream_async(
+        self, request_data: dict, llm_config: LLMConfig
+    ) -> AsyncStream[ChatCompletionChunk]:
         """
         Performs underlying streaming request to llm and returns raw response.
         """
-        raise NotImplementedError(f"Streaming is not supported for {llm_config.model_endpoint_type}")
+        raise NotImplementedError(
+            f"Streaming is not supported for {llm_config.model_endpoint_type}"
+        )
 
     @abstractmethod
     def handle_llm_error(self, e: Exception) -> Exception:
